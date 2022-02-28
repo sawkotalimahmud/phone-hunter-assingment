@@ -16,11 +16,16 @@
 <body class="bg-success bg-opacity-10">
     <h1 class="text-center mt-5">Search Your Favorite Phone</h1>
 
+    <!-- Search Section -->
     <div class="input-group mt-5 mb-3 w-50 mx-auto">
         <input id="search-field" type="text" class="form-control" placeholder="Search Phone" aria-label="Search Phone"
             aria-describedby="button-addon2">
         <button onclick="searchPhone()" class="btn btn-outline-secondary" type="button"
             id="button-search">Search</button>
+    </div>
+
+    <!-- Display Result -->
+    <div id="search-result" class="row row-cols-1 row-cols-md-3 g-4">
     </div>
 
     <!-- Script Link Section -->
