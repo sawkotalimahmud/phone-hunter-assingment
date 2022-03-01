@@ -4,7 +4,10 @@ document.getElementById('error-massage').style.display = 'none'
 const searchPhone = () => {
     const searchField = document.getElementById("search-field")
     const searchText = searchField.value;
+    document.getElementById('error-massage').style.display = 'none'
+    document.getElementById('phone-details').innerText = "";
     searchField.value = "";
+
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
     fetch(url)
         .then(res => res.json())
@@ -14,17 +17,21 @@ const searchPhone = () => {
 // Search Result Section 
 const displaySearchResult = phones => {
     const searchResult = document.getElementById('search-result');
-    searchResult.textContent = "";
-    if (phones.lenght == Number) {
+    console.log(phones);
+    console.log(phones.length);
+    searchResult.innerText = "";
+    if (phones.length == 0) {
         document.getElementById('error-massage').style.display = "block";
     }
 
     else {
-        phones.forEach(phone => {
-            // console.log(phone);
-            const div = document.createElement('div');
-            div.classList.add('col');
-            div.innerHTML = `
+        const totalPhones = phones.length;
+        if (totalPhones <= 20) {
+            phones.forEach(phone => {
+                // console.log(phone);
+                const div = document.createElement('div');
+                div.classList.add('col');
+                div.innerHTML = `
             <div class="card ">
                 <img src="${phone.image}" class="card-img-top" alt="...">
                 <div class="card-body">
@@ -33,8 +40,50 @@ const displaySearchResult = phones => {
                     <button onclick="loadPhoneDetail('${phone.slug}')" type="button" class="btn btn-outline-primary">Details</button>
                 </div>
             </div>`;
-            searchResult.appendChild(div);
-        });
+                searchResult.appendChild(div);
+            });
+        }
+        else {
+            for (let i = 0; i < 20; i++) {
+                const div = document.createElement('div');
+                div.classList.add('col');
+                div.innerHTML = `
+            <div class="card ">
+                <img src="${phones[i].image}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text">${phones[i].brand}</p>
+                    <h4 class="card-title">${phones[i].phone_name}</h4>
+                    <button onclick="loadPhoneDetail('${phones[i].slug}')" type="button" class="btn btn-outline-primary">Details</button>
+                </div>
+            </div>`;
+                searchResult.appendChild(div);
+
+            }
+            const btnDiv = document.createElement('div');
+            btnDiv.classList.add('col');
+            btnDiv.innerHTML = `
+                <button onclick="showMorePhone('${phones}')" type="button" class="btn btn-outline-primary">Show More</button>
+                </div >`
+            searchResult.appendChild(btnDiv);
+        }
+
+    }
+}
+const showMorePhone = (phones) => {
+    const searchResult = document.getElementById('search-result');
+    for (let i = 20; i < phones.length; i++) {
+        const div = document.createElement('div');
+        div.classList.add('col');
+        div.innerHTML = `
+    <div class="card ">
+        <img src="${phones[i].image}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <p class="card-text">${phones[i].brand}</p>
+            <h4 class="card-title">${phones[i].phone_name}</h4>
+            <button onclick="loadPhoneDetail('${phones[i].slug}')" type="button" class="btn btn-outline-primary">Details</button>
+        </div>
+    </div>`;
+        searchResult.appendChild(div);
     }
 }
 
@@ -51,6 +100,9 @@ const loadPhoneDetail = (phoneDetail) => {
 // Phone Detaile Show Section 
 const displayPhoneDetaile = displayDetail => {
     console.log(displayDetail);
+    if (displayDetail.releaseDate == '') {
+        displayDetail.releaseDate = "Release Date Not Found"
+    }
     const phoneDetails = document.getElementById('phone-details')
     phoneDetails.textContent = "";
 
@@ -76,3 +128,4 @@ const displayPhoneDetaile = displayDetail => {
 </div>`;
     phoneDetails.appendChild(div);
 }
+
