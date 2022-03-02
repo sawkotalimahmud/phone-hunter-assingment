@@ -17,8 +17,6 @@ const searchPhone = () => {
 // Search Result Section 
 const displaySearchResult = phones => {
     const searchResult = document.getElementById('search-result');
-    console.log(phones);
-    console.log(phones.length);
     searchResult.innerText = "";
     if (phones.length == 0) {
         document.getElementById('error-massage').style.display = "block";
@@ -28,15 +26,15 @@ const displaySearchResult = phones => {
         const totalPhones = phones.length;
         if (totalPhones <= 20) {
             phones.forEach(phone => {
-                // console.log(phone);
                 const div = document.createElement('div');
                 div.classList.add('col');
                 div.innerHTML = `
             <div class="card ">
                 <img src="${phone.image}" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <p class="card-text">${phone.brand}</p>
                     <h4 class="card-title">${phone.phone_name}</h4>
+                    <p class="card-text">${phone.brand}</p>
+                    
                     <button onclick="loadPhoneDetail('${phone.slug}')" type="button" class="btn btn-outline-primary">Details</button>
                 </div>
             </div>`;
@@ -51,41 +49,21 @@ const displaySearchResult = phones => {
             <div class="card ">
                 <img src="${phones[i].image}" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <p class="card-text">${phones[i].brand}</p>
                     <h4 class="card-title">${phones[i].phone_name}</h4>
+                    <p class="card-text">${phones[i].brand}</p>
+                    
                     <button onclick="loadPhoneDetail('${phones[i].slug}')" type="button" class="btn btn-outline-primary">Details</button>
                 </div>
             </div>`;
                 searchResult.appendChild(div);
 
             }
-            const btnDiv = document.createElement('div');
-            btnDiv.classList.add('col');
-            btnDiv.innerHTML = `
-                <button onclick="showMorePhone('${phones}')" type="button" class="btn btn-outline-primary">Show More</button>
-                </div >`
-            searchResult.appendChild(btnDiv);
+
         }
 
     }
 }
-const showMorePhone = (phones) => {
-    const searchResult = document.getElementById('search-result');
-    for (let i = 20; i < phones.length; i++) {
-        const div = document.createElement('div');
-        div.classList.add('col');
-        div.innerHTML = `
-    <div class="card ">
-        <img src="${phones[i].image}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <p class="card-text">${phones[i].brand}</p>
-            <h4 class="card-title">${phones[i].phone_name}</h4>
-            <button onclick="loadPhoneDetail('${phones[i].slug}')" type="button" class="btn btn-outline-primary">Details</button>
-        </div>
-    </div>`;
-        searchResult.appendChild(div);
-    }
-}
+
 
 // Phone Detaile Section 
 const loadPhoneDetail = (phoneDetail) => {
@@ -105,6 +83,7 @@ const displayPhoneDetaile = displayDetail => {
     }
     const phoneDetails = document.getElementById('phone-details')
     phoneDetails.textContent = "";
+    window.scroll(0, 0)
 
     const div = document.createElement('div')
     div.innerHTML = `
@@ -124,6 +103,13 @@ const displayPhoneDetaile = displayDetail => {
         <p class="card-title">* ${displayDetail.mainFeatures.sensors[3]}</p>
         <p class="card-title">* ${displayDetail.mainFeatures.sensors[4]}</p>
         <p class="card-title">* ${displayDetail.mainFeatures.sensors[5]}</p>
+        
+        <p class="card-title">Bluetooth: ${displayDetail.others?.Bluetooth}</p>
+        <p class="card-title">GPS: ${displayDetail.others?.GPS}</p>
+        <p class="card-title">NFC: ${displayDetail.others?.NFC}</p>
+        <p class="card-title">Radio: ${displayDetail.others?.Radio}</p>
+        <p class="card-title">USB: ${displayDetail.others?.USB}</p>
+        <p class="card-title">WLAN: ${displayDetail.others?.WLAN}</p>
         </div>
 </div>`;
     phoneDetails.appendChild(div);
