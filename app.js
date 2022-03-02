@@ -1,9 +1,11 @@
+// Error Massage Section 
 document.getElementById('error-massage').style.display = 'none'
 
 // Search Section 
 const searchPhone = () => {
     const searchField = document.getElementById("search-field")
     const searchText = searchField.value;
+
     document.getElementById('error-massage').style.display = 'none'
     document.getElementById('phone-details').innerText = "";
     searchField.value = "";
@@ -18,6 +20,7 @@ const searchPhone = () => {
 const displaySearchResult = phones => {
     const searchResult = document.getElementById('search-result');
     searchResult.innerText = "";
+
     if (phones.length == 0) {
         document.getElementById('error-massage').style.display = "block";
     }
@@ -56,18 +59,14 @@ const displaySearchResult = phones => {
                 </div>
             </div>`;
                 searchResult.appendChild(div);
-
             }
-
         }
-
     }
 }
 
 
 // Phone Detaile Section 
 const loadPhoneDetail = (phoneDetail) => {
-    // console.log(phoneDetail);
     const url = `
     https://openapi.programming-hero.com/api/phone/${phoneDetail}`;
     fetch(url)
@@ -77,10 +76,10 @@ const loadPhoneDetail = (phoneDetail) => {
 
 // Phone Detaile Show Section 
 const displayPhoneDetaile = displayDetail => {
-    console.log(displayDetail);
     if (displayDetail.releaseDate == '') {
         displayDetail.releaseDate = "Release Date Not Found"
     }
+
     const phoneDetails = document.getElementById('phone-details')
     phoneDetails.textContent = "";
     window.scroll(0, 0)
